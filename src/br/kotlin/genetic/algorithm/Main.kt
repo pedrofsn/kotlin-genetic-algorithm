@@ -17,8 +17,7 @@ fun main(args: Array<String>) {
         products.add(product)
     }
 
-    val ga = GeneticAlgorithm(10)
-    ga.resolve(
+    GeneticAlgorithm(10).resolve(
             mutation = 20,
             generations = 20,
             products = products
