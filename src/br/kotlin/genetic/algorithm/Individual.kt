@@ -5,14 +5,13 @@ import kotlin.collections.ArrayList
 
 data class Individual(
         val products: List<Product>,
-        val maxSize: Double,
         var generation: Int = 0
 ) {
     private val random = Random()
 
-    private val chromosome: ArrayList<Boolean> = arrayListOf()
-    private var sumValues = 0.0
-    private var sumSpaces = 0.0
+    val chromosome: ArrayList<Boolean> = arrayListOf()
+    var sumValues = 0.0 // Rating
+    var sumSpaces = 0.0
 
     init {
         products.forEach { chromosome.add(random.nextBoolean()) }
@@ -22,7 +21,7 @@ data class Individual(
         sumValues = products.map { it.price }.sum()
         sumSpaces = products.map { it.size }.sum()
 
-        if (sumSpaces > maxSize) {
+        if (sumSpaces > MAX_SIZE) {
             sumValues = 1.0 // ????
         }
     }
