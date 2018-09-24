@@ -33,4 +33,6 @@ fun main(args: Array<String>) {
     )
 
     individual1.crossover(individual2)
+    individual1.mutation(30)
+    individual1.crossover(individual2)
 }

@@ -62,13 +62,13 @@ data class Individual(
     }
 
     fun mutation(mutation: Int) {
-        print("Antes da mutação: $chromosome")
+        println("Before mutation:  $chromosome")
         chromosome.forEachIndexed { index, value ->
             if (random.nextInt(100) <= mutation) {
                 chromosome[index] = value.not()
             }
         }
-        print("Depois da mutação: $chromosome")
+        println("After mutation:   $chromosome")
     }
 
 }
