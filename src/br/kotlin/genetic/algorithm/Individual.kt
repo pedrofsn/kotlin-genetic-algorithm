@@ -17,8 +17,12 @@ data class Individual(
     }
 
     fun rate() {
-        sumValues = products.map { it.price }.sum()
-        sumSpaces = products.map { it.size }.sum()
+        for (index in 0 until chromosome.size) {
+            if (chromosome[index]) {
+                sumValues += products[index].price
+                sumSpaces += products[index].size
+            }
+        }
 
         if (sumSpaces > MAX_SIZE) {
             sumValues = 1.0 // ????
@@ -50,7 +54,7 @@ data class Individual(
         child2.chromosome.clear()
         child2.chromosome.addAll(chromosomeChild2)
 
-        print()
+        printChromossome()
         println("Other Chromosome:  ${other.chromosome}")
         println("Child 1:           ${child1.chromosome}")
         println("Child 2:           ${child2.chromosome}")
@@ -70,6 +74,17 @@ data class Individual(
         return this
     }
 
-    fun print() = println("Chromosome:        $chromosome")
+    fun printChromossome() = println("Chromosome:        $chromosome")
+
+    fun printAsBestCase() {
+        println("\n\n\n### BEST CASE GENERATION $generation ###")
+        println("### PRODUCTS:")
+        chromosome.forEachIndexed { index, value ->
+            if (value) {
+                products[index].print()
+            }
+        }
+        printChromossome()
+    }
 
 }
