@@ -1,7 +1,6 @@
 package br.kotlin.genetic.algorithm
 
 import java.util.*
-import kotlin.collections.ArrayList
 
 data class Individual(
         val products: List<Product>,
@@ -51,7 +50,7 @@ data class Individual(
         child2.chromosome.clear()
         child2.chromosome.addAll(chromosomeChild2)
 
-        println("Chromosome:        $chromosome")
+        print()
         println("Other Chromosome:  ${other.chromosome}")
         println("Child 1:           ${child1.chromosome}")
         println("Child 2:           ${child2.chromosome}")
@@ -60,7 +59,7 @@ data class Individual(
         return listOf(child1, child2)
     }
 
-    fun mutation(mutation: Int) {
+    fun mutation(mutation: Int): Individual {
         println("Before mutation:  $chromosome")
         chromosome.forEachIndexed { index, value ->
             if (random.nextInt(100) <= mutation) {
@@ -68,6 +67,9 @@ data class Individual(
             }
         }
         println("After mutation:   $chromosome")
+        return this
     }
+
+    fun print() = println("Chromosome:        $chromosome")
 
 }

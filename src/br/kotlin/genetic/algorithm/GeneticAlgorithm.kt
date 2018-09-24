@@ -3,7 +3,7 @@ package br.kotlin.genetic.algorithm
 import java.util.*
 
 class GeneticAlgorithm(
-        private val sizePopulation: Int
+        val sizePopulation: Int
 ) {
     private val random = Random()
 
@@ -30,16 +30,32 @@ class GeneticAlgorithm(
     }
 
     fun defineBestCase(candidate: Individual) {
-        if(candidate.sumValues > bestCase.sumValues) {
+        if (candidate.sumValues > bestCase.sumValues) {
             bestCase = candidate
         }
     }
 
     fun rating() = population.map { it.sumValues }.sum()
 
-    fun selectFather(sumValues : Double) {
+    fun selectFather(sumValues: Double): Int {
         var father = -1
-        val randomValue = random.nextInt(1) * sumValues
+        val randomValue = random.nextDouble() * sumValues
+        var sum = 0.0
+        var i = 0
+
+        do {
+            sum += population[i].sumValues
+            father += 1
+            i += 1
+        } while (i < population.size && sum < randomValue)
+
+        return father
+    }
+
+    fun printPopulation() {
+        println("### POPULATION - START")
+        population.forEach { it.print() }
+        println("### POPULATION - END")
     }
 
 }
