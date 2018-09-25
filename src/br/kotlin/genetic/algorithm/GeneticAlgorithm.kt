@@ -8,22 +8,26 @@ class GeneticAlgorithm(
     private val random = Random()
 
     val population = mutableListOf<Individual>()
-    private lateinit var bestCase: Individual
+    private var bestCase: Individual? = null
 
     fun initializePopulation(products: List<Product>) {
-        for (index in 1..sizePopulation) {
+        for (index in 0..sizePopulation) {
             val individual = Individual(products)
             population.add(individual)
         }
-        bestCase = population[0]
+        bestCase = population.first()
+    }
+
+    fun printLimit() {
+        println("\n")
+        println("Max size: $MAX_SIZE")
     }
 
     fun printProducts(products: List<Product>) {
-        println("\n\n")
-        println("### PRODUCTS - START")
+        println("\n")
+        println("# PRODUCTS")
         products.forEach { product -> product.print() }
-        println("### PRODUCTS - END")
-        println("\n\n")
+        println("\n")
     }
 
     fun sortPopulation() {
@@ -34,7 +38,7 @@ class GeneticAlgorithm(
     }
 
     fun defineBestCase(candidate: Individual) {
-        if (candidate.sumValues > bestCase.sumValues) {
+        if (bestCase == null || (bestCase != null && candidate.sumValues > bestCase!!.sumValues)) {
             bestCase = candidate
         }
     }
@@ -57,20 +61,20 @@ class GeneticAlgorithm(
     }
 
     fun printGeneration() {
-        bestCase = population[0]
-        printBestCase()
+        population.first().apply {
+            println("G: ${generation}\t -> $: ${sumValues}\t and has ${sumSpaces}\t|\tChromossome: ${chromosome}")
+        }
     }
 
-    fun printBestCase() = println("\n\nG: ${bestCase.generation} -> R$: ${bestCase.sumValues} and has ${bestCase.sumSpaces} | Chromossome: ${bestCase.chromosome}")
-
     fun resolve(mutation: Int, generations: Int, products: List<Product>): ArrayList<Boolean> {
+        printLimit()
         printProducts(products)
         initializePopulation(products)
+
         rate()
-        sortPopulation()
         printGeneration()
 
-        for (indexGeneration in 1..generations) {
+        for (indexGeneration in 0..generations) {
             val newPopulation = arrayListOf<Individual>()
             val sumRating = rating()
 
@@ -78,7 +82,7 @@ class GeneticAlgorithm(
                 val indexFather1 = selectFather(sumRating)
                 val indexFather2 = selectFather(sumRating)
 
-                val childs = population[indexFather1].crossover(population[indexFather2])
+                val childs = population[indexFather1].crossover(population[indexFather2], indexGeneration)
 
                 newPopulation.add(childs[0].mutation(mutation))
                 newPopulation.add(childs[1].mutation(mutation))
@@ -88,16 +92,14 @@ class GeneticAlgorithm(
             population.addAll(newPopulation)
 
             rate()
-
             sortPopulation()
             printGeneration()
-            bestCase = population.first()
-            defineBestCase(bestCase)
+            defineBestCase(population.first())
         }
 
-        bestCase.printAsBestCase()
+        bestCase?.printAsBestCase()
 
-        return bestCase.chromosome
+        return bestCase?.chromosome ?: ArrayList()
     }
 
     private fun rate() = population.forEachIndexed { index, _ -> population[index].rate() }

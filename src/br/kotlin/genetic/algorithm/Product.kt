@@ -5,5 +5,5 @@ data class Product (
         val price : Double,
         val size : Double
 ) {
-    fun print() = println("'$name' is R$ $price and has $size")
+    fun print() = println("'$name' is $ $price and size $size")
 }
