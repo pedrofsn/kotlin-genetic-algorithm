@@ -1,8 +1,15 @@
 # kotlin-genetic-algorithm
+
+## Problem
+### Description
+Every product has a name, price and size. With 6 products, find a combination with higher value/price and lowest size. Considering mutation rate, limit of generations and size population.
+
+### Observation
+When size it's bigger than MAX_SIZE (5.0), the sumValues/rating is defined as 1.0
+
 ## Output
 ```
 Max size: 5.0
-
 
 # PRODUCTS
 'Zenphone 5Z' is $ 1700.0 and size 1.0
@@ -28,7 +35,14 @@ G: 7	 -> $: 8000.0	 and has 2.5	|	Chromossome: [true, true, false, true, false, 
 ### PRODUCTS:
 'Iphone X' is $ 6000.0 and size 1.0
 'Samsung Note 9' is $ 7000.0 and size 1.0
+
 Chromosome:        [false, true, true, false, false, false]
+
 Sum values: 13000.0
 Sum sizes: 2.0
 ```
+
+
+
+
+Developed with programming language [Kotlin](https://pt.wikipedia.org/wiki/Kotlin) using [IntelliJ Community Edition](https://www.jetbrains.com/idea/download/)
