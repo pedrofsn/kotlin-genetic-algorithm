@@ -25,7 +25,7 @@ data class Individual(
         }
 
         if (sumSpaces > MAX_SIZE) {
-            sumValues = 1.0 // ????
+            sumValues = 1.0
         }
     }
 
